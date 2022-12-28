@@ -1,0 +1,34 @@
+name: Rust
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  clippy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      run: cargo build --verbose
+    - name: Run clippy
+      run: cargo clippy --verbose
+  arm_build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: install arm toolchain
+      uses: actions-rs/toolchain@v1.0.6
+      with: 
+        toolchain: stable-armv7-unknown-linux-gnueabihf
+        target: armv7-unknown-linux-gnueabihf
+    - name: Build
+      uses: actions-rs/cargo@v1.0.1
+      with:
+        command: build
+        toolchain: stable-armv7-unknown-linux-gnueabihf
