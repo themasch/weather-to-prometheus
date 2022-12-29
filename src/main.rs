@@ -47,7 +47,8 @@ async fn update_metrics(metrics: MetricFamilies, client: owm_api::ApiClient, loc
 #[tokio::main]
 async fn main() {
     let api_key = std::env::var("OWM_API_KEY").unwrap();
-    let lat_lon: LatLon = std::env::var("OWM_LAT_LON").unwrap()
+    let lat_lon: LatLon = std::env::var("OWM_LAT_LON")
+        .unwrap()
         .parse()
         .expect("could not parse location data");
 
