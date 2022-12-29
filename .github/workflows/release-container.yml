@@ -1,0 +1,46 @@
+name: Rust
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  ARM_TARGET: armv7-unknown-linux-musleabihf
+
+jobs:
+  arm_build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        target: ${{ env.ARM_TARGET }}
+        override: true
+    - uses: actions-rs/cargo@v1
+      with:
+        use-cross: true
+        command: build
+        args: --target ${{ env.ARM_TARGET }} --release
+    - name: Log in to the Container registry
+      uses: docker/login-action@v2
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta
+      uses: docker/metadata-action@v4
+      with:
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+    - name: Build and push
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        platforms: linux/arm/v7

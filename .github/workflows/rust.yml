@@ -8,6 +8,9 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  ARM_TARGET: armv7-unknown-linux-musleabihf
 
 jobs:
   clippy:
@@ -29,17 +32,18 @@ jobs:
       with:
         command: fmt
         args: --all -- --check
-  arm_build:
+
+  check_on_arm:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - uses: actions-rs/toolchain@v1
       with:
         toolchain: stable
-        target: armv7-unknown-linux-gnueabihf
+        target: ${{ env.ARM_TARGET }}
         override: true
     - uses: actions-rs/cargo@v1
       with:
         use-cross: true
-        command: build
-        args: --target armv7-unknown-linux-gnueabihf
+        command: check
+        args: --target ${{ env.ARM_TARGET }}
