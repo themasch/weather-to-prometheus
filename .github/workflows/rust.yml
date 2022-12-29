@@ -14,10 +14,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Build
-      run: cargo build --verbose
+    - name: setup toolchain with rustfmt and clippy
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        components: rustfmt, clippy
     - name: Run clippy
-      run: cargo clippy --verbose
+      uses: actions-rs/cargo@v1
+      with:
+        command: clippy
+        args: --verbose
+    - name: Run rustfmt
+      uses: actions-rs/cargo@v1
+      with:
+        command: fmt
+        args: --all -- --check
   arm_build:
     runs-on: ubuntu-latest
     steps:
