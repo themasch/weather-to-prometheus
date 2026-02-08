@@ -14,4 +14,4 @@ reqwest = { version = "0.13.0", features = ["json", "rustls"], default-features 
 serde = { version = "1.0.152", features = ["derive"] }
 serde_json = "1.0.91"
 thiserror = "2.0.0"
-tokio = { version = "1.23.0", features = ["rt", "macros", "net", "num_cpus", "rt-multi-thread", "time"] }
+tokio = { version = "1.49.0", features = ["rt", "macros", "net", "rt-multi-thread", "time"] }
