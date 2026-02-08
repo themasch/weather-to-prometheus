@@ -86,8 +86,8 @@ async fn main() {
         .with_state(state);
 
     // run it with hyper on localhost:3000
-    axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
-        .serve(app.into_make_service())
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000")
         .await
-        .unwrap();
+        .expect("failed to start tcp listener");
+    axum::serve(listener, app).await.unwrap();
 }
