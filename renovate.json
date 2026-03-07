@@ -17,7 +17,7 @@
   },
     "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": ["minor", "patch", "lockFileMaintenance"],
       "matchCurrentVersion": "!/^0/",
       "automerge": true
     }
