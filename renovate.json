@@ -11,7 +11,7 @@
     "commitMessageAction": "Lock file maintenance",
     "commitMessageTopic": null,
     "commitMessageExtra": null,
-    "schedule": ["before 4am on friday", "saturday"],
+    "schedule": ["before 4am on friday", "* * * * 6"],
     "groupName": null,
     "prBodyDefinitions": {"Change": "All locks refreshed"}
   }
