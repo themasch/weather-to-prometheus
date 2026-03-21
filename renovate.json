@@ -11,14 +11,18 @@
     "commitMessageAction": "Lock file maintenance",
     "commitMessageTopic": null,
     "commitMessageExtra": null,
-    "schedule": ["before 4am on friday", "* * * * 6"],
+    "schedule": ["* * * * 5,6"],
     "groupName": null,
     "prBodyDefinitions": {"Change": "All locks refreshed"}
   },
     "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch", "lockFileMaintenance"],
+      "matchUpdateTypes": ["minor", "patch"],
       "matchCurrentVersion": "!/^0/",
+      "automerge": true
+    },
+    {
+      "matchUpdateTypes": ["lockFileMaintenance"],
       "automerge": true
     }
   ]
